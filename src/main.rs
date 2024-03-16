@@ -1,37 +1,25 @@
 fn main() {
-    let x =define_x();
-    let y = define_y();
-    println!("{}, world", x);
-    println!("{}, world", y);
+    assert_eq!(9, u8::MAX.wrapping_add(10));
+    assert_eq!(None, u8::MAX.checked_add(10));
+    assert_eq!((9, true), u8::MAX.overflowing_add(10));
+    assert_eq!(255, u8::MAX.saturating_add(10));
 
-    let mut z = 1;
-    println!("{}", z);
-    z = 2;
-    let z = z;
-    println!("{}", z);
+    // println!("{}", 10_u8.checked_add(10));
+    println!("{:?}", 10_u8.checked_add(10)); // Option<u8>
 
-    test_unused_variables();
+    let abc: (f32, f32, f32) = (0.1, 0.2, 0.3);
+    let xyz: (f64, f64, f64) = (0.1, 0.2, 0.3);
 
+    println!("abc (f32)");
+    println!("   0.1 + 0.2: {:x}", (abc.0 + abc.1).to_bits());
+    println!("         0.3: {:x}", (abc.2).to_bits());
+    println!();
 
-    let (mut i, j) = (1, 2);
-    assert_eq!(i, 1);
-    i = 2;
-    assert_eq!(i, 2);
-    assert_eq!(j, 2);
+    println!("xyz (f64)");
+    println!("   0.1 + 0.2: {:x}", (xyz.0 + xyz.1).to_bits());
+    println!("         0.3: {:x}", (xyz.2).to_bits());
+    println!();
 
-}
-
-fn define_x() -> String {
-    let x = "hello".to_string();
-    return x
-}
-
-fn define_y() -> &'static str {
-    let x = "hello";
-    x
-}
-
-#[allow(unused_variables)]
-fn test_unused_variables() {
-    let x = 123;
+    assert!(abc.0 + abc.1 == abc.2); // 不报错
+    assert!(xyz.0 + xyz.1 == xyz.2); // 报错
 }
